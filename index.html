@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="english">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consent Widget</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="widget-container">
+   	<div class="header-language-wrapper-container ">
+		<div id="language-wrapper" style="display: none;">
+		    <div class="dropdown">
+			<label for="langSelect">Language Preference <br></label>
+			<select id="langSelect"></select>
+			</div>
+		</div>  
+	</div>
+    <div class="header-container">
+      <div class="logo-area" id="logo-area"></div>
+    </div>
+    	<div class ="preview-statements">
+        <div id="consent-root">Loading consent form...</div>
+        <div id="error-message" class="error-message"></div>
+        <div id="toast"></div>
+      </div> 
+      <div class="full-width-footer-border"></div>
+      <div class="button-group" id="button-group">
+          <button class="cancel" id="cancelBtn" style="display: none;">Cancel</button>
+          <button class="submit" id="submitBtn" style="display: none;">Submit</button>
+      </div>
+    
+  </div>
+  <script>
+    // Configuration options for the consent widget
+    window.consentWidgetConfig = {
+      consentFormId: "ed3bf014-c23c-425c-94b4-b58bcb6770c6",
+      apiUrl: "https://starhealth.pre-dataprivacy.com/cpm-api/open-api/v1/consent/v1/getConsentFormById",
+      submitApiUrl: "https://starhealth.pre-dataprivacy.com/cpm-api/open-api/v1/consent/v1/createOrUpdateConsent",
+      tenantToken: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjMDE0NTczNi01MmIyLTRkMjEtOTQ2My0zZDI2NTQyMDQzZjciLCJwcm9kdWN0IjoiQ29uc2VudCBNYW5hZ21lbnQiLCJzY29wZSI6ImFjY2VzcyIsImlhdCI6MTc4MjE5NTc5MSwiZXhwIjoxNzgyMjgyMTkxfQ.DYKUCXh47GFRkmEGw_ZeLyNlNoRd42Pbs07-JV422uE",
+      signatureServiceUrl: "https://starhealth.pre-dataprivacy.com/cpm-sign",
+      dataPrincipalId: [
+        {
+          key: "email",
+          value: "jakoji88@yopmail.com"
+        }
+      ],
+      customAttributes: {},
+      showButtons: true,
+      showLanguageDropdown: true,
+      enableCheckboxes: true,
+      enableRadioButtons: true,
+      enableDropdowns: true,
+      receivedType:"WEB"
+    };
+  </script>
+  
+
+<!--
+  Optional: Use custom buttons if the parent application
+  wants to control Consent Form submission and reset actions.
+
+  Note:
+  - Set `showButtons: false` in the widget configuration.
+  - Submit button calls `consentWidget.submit()`.
+  - Clear button calls `consentWidget.reset()`.
+-->
+
+<!--Example-->
+
+<!--
+<button id="parentClearBtn" style="padding:10px 16px; background:#dc2626; color:white; border:none; border-radius:6px;">
+  Clear Consent
+</button>
+<button id="parentSubmitBtn" style="padding:10px 16px; background:#16a34a; color:white; border:none; border-radius:6px;">
+  Submit Consent
+</button>
+
+<script>
+  document.getElementById("parentSubmitBtn").addEventListener("click", async () => {
+    if (!window.consentWidget) return;
+
+    const result = await window.consentWidget.submit();
+
+    console.log("Submit result:", result);
+
+    if (result.success) {
+      // navigate next page here
+      // window.location.href = "/next-page";
+    }
+  });
+
+  document.getElementById("parentClearBtn").addEventListener("click", () => {
+    if (!window.consentWidget) return;
+
+    window.consentWidget.reset();
+  });
+</script>
+-->
+
+<script src="script.js" integrity="sha384-foiWzDPUhmbJ4rQRGLNtJSYoh3soGXD6gy6wGP0X3+odxXnlEFymvsZMOeRWKBzc" crossorigin="anonymous"></script>
+</body>
+</html>
