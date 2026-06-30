@@ -467,8 +467,16 @@ async function sendConsent() {
     throw err;
 
   } finally {
+    // Send response to Android WebView if available
+    if (typeof window.AndroidBridge !== 'undefined' && 
+        typeof window.AndroidBridge.onApiResponse === 'function') {
+      try {
+        window.AndroidBridge.onApiResponse(JSON.stringify(data));
+      } catch (error) {
+        console.error('Failed to send response to Android:', error);
+      }
+    }
     setFormDisabled(false);
-
     // ALWAYS REFRESH CONSENT AFTER SUBMIT ATTEMPT
     const langSelect = document.getElementById("langSelect");
     const selectedLang =
@@ -664,7 +672,7 @@ langSelect.onchange = async () => {
           el.setAttribute("data-translate-text", perm.id);
 
           if (perm.mandatory && index === children.length - 1) {
-            el.innerHTML += ' <span class="mandatory">*</span>';
+                el.innerHTML += ' <span class="mandatory">*</span>';
           }
 
           block.appendChild(el);
